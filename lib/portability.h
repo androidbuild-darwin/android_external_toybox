@@ -229,8 +229,11 @@ ssize_t xattr_fset(int, const char*, const void*, size_t, int);
 #endif
 
 #if defined(__APPLE__)
-// macOS doesn't have these functions, but we can fake them.
-int mknodat(int, const char*, mode_t, dev_t);
+#include <sys/stat.h>
+// Use our fallback without inheriting the SDK availability annotation.
+#define mknodat toybox_mknodat
+int toybox_mknodat(int, const char*, mode_t, dev_t);
+// macOS doesn't have posix_fallocate, but we can fake it.
 int posix_fallocate(int, off_t, off_t);
 
 // macOS keeps newlocale(3) in the non-POSIX <xlocale.h> rather than <locale.h>.
