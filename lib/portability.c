@@ -369,7 +369,7 @@ ssize_t xattr_fset(int fd, const char* name,
 #ifdef __APPLE__
 // In the absence of a mknodat system call, fchdir to dirfd and back
 // around a regular mknod call...
-int mknodat(int dirfd, const char *path, mode_t mode, dev_t dev)
+int toybox_mknodat(int dirfd, const char *path, mode_t mode, dev_t dev)
 {
   int old_dirfd = open(".", O_RDONLY), result;
 
